@@ -64,9 +64,11 @@ function analisaLista(lista){
     var aux = null;
     var aux1 = null;
     var aux2 = null;
+    var jaInseriu = false;
     var instrucao1 = new Instrucao();
     var instrucao2 = new Instrucao();
     var instrucao3 = new Instrucao();
+    
     var verificInst1 = '';
     var verificInst2 = '';
     var verificInst3 = '';
@@ -74,6 +76,7 @@ function analisaLista(lista){
         aux = lista?.getHeadNode();
         while(aux?.hasNext())
         {
+            jaInseriu = false;
             instrucao1.instrucaoCompleta = aux?.getData();
         instrucao1.codigoOperacao = instrucao1?.instrucaoCompleta?.substring(25);
         instrucao1.registradorDest = instrucao1?.instrucaoCompleta?.substring(20, 25);
@@ -142,7 +145,7 @@ function analisaLista(lista){
 
                         lista.insertAfter(aux?.getData(), "00000000000000000000000000010011 nop");
                         lista.insertAfter(aux?.getData(), "00000000000000000000000000010011 nop");
-                        
+                        jaInseriu = true;
                     }
                     
                 }else if(verificInst2 == "IM" || verificInst2 == "IAE")
@@ -151,9 +154,10 @@ function analisaLista(lista){
                     {
                         lista.insertAfter(aux?.getData(), "00000000000000000000000000010011 nop");
                         lista.insertAfter(aux?.getData(), "00000000000000000000000000010011 nop");
+                        jaInseriu = true;
                     }
                 }   
-                if(aux2 != null){
+                if(aux2 != null && !jaInseriu){
                     if(verificInst3 == "B" || verificInst3 == "S" || verificInst3 == "R")
                     {
                         if(instrucao1.registradorDest == instrucao3.registrador1 || instrucao1.registradorDest == instrucao3.registrador2)
