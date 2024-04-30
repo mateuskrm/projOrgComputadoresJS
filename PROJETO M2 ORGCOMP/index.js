@@ -24,9 +24,9 @@ function calcularImprimirDesempenho(orgProps) {
 	orgProps.tExec = orgProps.contadorInstrucaoModificado * orgProps.CPI * orgProps.tempoClock;
 
 	console.log("Sobrecusto em instrucõess do programa: " + orgProps.sobreCustoInstrucao);
-	console.log("Ciclos por Instrucão(CPI) do programa: " + orgProps.CPI);
+	console.log("Ciclos por Instrucão(CPI) do programa: " + Math.round(orgProps.CPI * 100) / 100);
 	console.log("Número de Ciclos do Programa: " + orgProps.ciclosProg);
-	console.log("Tempo de Execucão: " + orgProps.tExec);
+	console.log("Tempo de Execucão: " + Math.round(orgProps.tExec * 100) / 100);
 }
 
 async function processaArquivo(arquivo, orgProps)
