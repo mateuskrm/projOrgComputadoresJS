@@ -145,12 +145,7 @@ function analisaLista(lista){
 
 
             if(verificInst1 != "NOP"){
-                if(aux1 != null && verificInst2 == "J")
-                {
-                    
-                    lista.insertAfter(aux?.getData(), "00000000000000000000000000010011 nop");
-        
-                }else if(verificInst1 == "IAE"|| verificInst1 == "U" || verificInst1 == "IM" || verificInst1 == "R")
+		if(verificInst1 == "IAE"|| verificInst1 == "U" || verificInst1 == "IM" || verificInst1 == "R")
                 {
                     if(aux1 != null){
                         if(verificInst2 == "B" || verificInst2 == "S" || verificInst2 == "R")
