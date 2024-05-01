@@ -20,13 +20,17 @@ function calcularImprimirDesempenho(orgProps) {
 	orgProps.CPI = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1)) / orgProps.contadorInstrucaoModificado;
     // Total de ciclos do programa 
 	orgProps.ciclosProg = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1));
-    // Tempo de execução
-	orgProps.tExec = orgProps.contadorInstrucaoModificado * orgProps.CPI * orgProps.tempoClock;
+    // Tempo de execução Original
+	orgProps.tExecOriginal = orgProps.contadorInstrucaoOriginal * orgProps.CPI * orgProps.tempoClock;
+    // Tempo de execução Modificado
+    orgProps.tExecModificado = orgProps.contadorInstrucaoModificado * orgProps.CPI * orgProps.tempoClock;
 
 	console.log("Sobrecusto em instrucõess do programa: " + orgProps.sobreCustoInstrucao);
 	console.log("Ciclos por Instrucão(CPI) do programa: " + Math.round(orgProps.CPI * 100) / 100);
 	console.log("Número de Ciclos do Programa: " + orgProps.ciclosProg);
-	console.log("Tempo de Execucão: " + Math.round(orgProps.tExec * 100) / 100);
+	console.log("Tempo de Execucão Original: " + Math.round(orgProps.tExecOriginal * 100) / 100);
+	console.log("Tempo de Execucão Modificado: " + Math.round(orgProps.tExecModificado * 100) / 100);
+	console.log("O tempo Original é " + Math.round((orgProps.tExecModificado /  orgProps.tExecOriginal ) * 100) / 100 + " vezes mais rápido do que o modificado.");
 }
 
 async function processaArquivo(arquivo, orgProps)
