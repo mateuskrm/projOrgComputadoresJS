@@ -16,18 +16,24 @@ function calcularImprimirDesempenho(orgProps) {
 
     // Calcula o sobrecusto entre a solução original e a solução modificada
 	orgProps.sobreCustoInstrucao = orgProps.contadorInstrucaoModificado - orgProps.contadorInstrucaoOriginal;
-    // Calcula o CPI,considerando os 5 ciclos da arquitetura pipeline e 1 instrução completa por ciclo
-	orgProps.CPI = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1)) / orgProps.contadorInstrucaoModificado;
-    // Total de ciclos do programa 
-	orgProps.ciclosProg = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1));
-    // Tempo de execução Original
-	orgProps.tExecOriginal = orgProps.contadorInstrucaoOriginal * orgProps.CPI * orgProps.tempoClock;
-    // Tempo de execução Modificado
-    orgProps.tExecModificado = orgProps.contadorInstrucaoModificado * orgProps.CPI * orgProps.tempoClock;
+    // Calcula o CPI Modificado,considerando os 5 ciclos da arquitetura pipeline e 1 instrução completa por ciclo Fórmula => [5 + 1.(I – 1)] / I
+	orgProps.CPIOriginal = (5 + 1 * (orgProps.contadorInstrucaoOriginal - 1)) / orgProps.contadorInstrucaoOriginal;
+    // Calcula o CPI Original,considerando os 5 ciclos da arquitetura pipeline e 1 instrução completa por ciclo Fórmula => [5 + 1.(I – 1)] / I
+	orgProps.CPIModificado = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1)) / orgProps.contadorInstrucaoModificado;
+    // Total de ciclos do arquivo Original 
+	orgProps.ciclosProgOriginal = (5 + 1 * (orgProps.contadorInstrucaoOriginal - 1));
+    // Total de ciclos do arquivo Modificado 
+	orgProps.ciclosProgModificado = (5 + 1 * (orgProps.contadorInstrucaoModificado - 1));
+    // Tempo de execução Original Fórmula => tCPU = I x CPI x Tclk
+	orgProps.tExecOriginal = orgProps.contadorInstrucaoOriginal * orgProps.CPIOriginal * orgProps.tempoClock;
+    // Tempo de execução Modificado Fórmula => tCPU = I x CPI x Tclk
+    orgProps.tExecModificado = orgProps.contadorInstrucaoModificado * orgProps.CPIModificado * orgProps.tempoClock;
 
-	console.log("Sobrecusto em instrucõess do programa: " + orgProps.sobreCustoInstrucao);
-	console.log("Ciclos por Instrucão(CPI) do programa: " + Math.round(orgProps.CPI * 100) / 100);
-	console.log("Número de Ciclos do Programa: " + orgProps.ciclosProg);
+	console.log("Sobrecusto em instrucões do programa: " + orgProps.sobreCustoInstrucao);
+	console.log("Ciclos por Instrucão(CPI) do arquivo original: " + Math.round(orgProps.CPIOriginal * 100) / 100);
+	console.log("Ciclos por Instrucão(CPI) do arquivo modificado: " + Math.round(orgProps.CPIModificado * 100) / 100);
+	console.log("Número de Ciclos no Programa do arquivo Original: " + orgProps.ciclosProgOriginal);
+	console.log("Número de Ciclos no Programa do arquivo Modificado: " + orgProps.ciclosProgModificado);
 	console.log("Tempo de Execucão Original: " + Math.round(orgProps.tExecOriginal * 100) / 100);
 	console.log("Tempo de Execucão Modificado: " + Math.round(orgProps.tExecModificado * 100) / 100);
 	console.log("O tempo Original é " + Math.round((orgProps.tExecModificado /  orgProps.tExecOriginal ) * 100) / 100 + " vezes mais rápido do que o modificado.");
@@ -217,10 +223,13 @@ async function main(){
         contadorInstrucaoOriginal: 0,
         contadorInstrucaoModificado: 0,
         sobreCustoInstrucao: 0,
-        CPI: 0,
-        ciclosProg: 0,
+        CPIOriginal: 0,
+        CPIModificado: 0,
+        ciclosProgOriginal: 0,
+        ciclosProgModificado: 0,
         tempoClock: 0,
-        tExec: 0
+        tExecOriginal: 0,
+        tExecModificado: 0
     }
 
     const rl = readline.createInterface({
